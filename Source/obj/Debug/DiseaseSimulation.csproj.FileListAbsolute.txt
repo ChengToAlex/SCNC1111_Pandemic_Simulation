@@ -1,0 +1,14 @@
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\obj\Debug\DiseaseSimulation.csproj.AssemblyReference.cache
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\obj\Debug\DiseaseSimulation.csproj.CoreCompileInputs.cache
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\bin\Debug\DiseaseSimulation.exe.config
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\bin\Debug\DiseaseSimulation.exe
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\bin\Debug\DiseaseSimulation.pdb
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\obj\Debug\DiseaseSimulation.exe
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation\obj\Debug\DiseaseSimulation.pdb
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\bin\Debug\DiseaseSimulation.exe.config
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\bin\Debug\DiseaseSimulation.exe
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\bin\Debug\DiseaseSimulation.pdb
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Debug\DiseaseSimulation.csproj.AssemblyReference.cache
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Debug\DiseaseSimulation.csproj.CoreCompileInputs.cache
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Debug\DiseaseSimulation.exe
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Debug\DiseaseSimulation.pdb
