@@ -1,7 +1,7 @@
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation.exe.config
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation.exe
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\DiseaseSimulation.pdb
-C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Release\DiseaseSimulation.csproj.AssemblyReference.cache
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Release\DiseaseSimulation.csproj.CoreCompileInputs.cache
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Release\DiseaseSimulation.exe
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Release\DiseaseSimulation.pdb
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Release\DiseaseSimulation.csproj.CopyComplete
