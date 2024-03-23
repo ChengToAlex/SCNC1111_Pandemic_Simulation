@@ -32,3 +32,4 @@ C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\bin\Debug\System.Me
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Debug\DiseaseSimulation.csproj.CopyComplete
+C:\Users\Alex To\Documents\SCNC1111\DiseaseSimulation\Source\obj\Debug\DiseaseSimulation.csproj.AssemblyReference.cache

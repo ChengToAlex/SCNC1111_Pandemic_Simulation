@@ -9,7 +9,7 @@ namespace DiseaseSimulation
 {
     class Program
     {
-        Random rnd = new Random();
+        Random rnd = new Random(); //Old randomizer, mscorlib built-in
         static void Main(string[] args)
         {
             Console.WriteLine("");
@@ -131,6 +131,7 @@ namespace DiseaseSimulation
                 Console.WriteLine("Not a valid integer");
                 goto repeat7;
             }
+
             ChanceOfCure = ChanceOfCure / 100;
             ChanceOfArrest = ChanceOfArrest / 100;
             ChanceOfInfection = ChanceOfInfection / 100;
@@ -171,18 +172,34 @@ namespace DiseaseSimulation
             Console.ReadLine();
 
             currentContagious = currentInfected;
+            Console.WriteLine("Current Contagious Population: " + currentContagious); //Console write the 0th Cycle(initial)
+            Console.WriteLine("Current Cases of Infection: " + currentInfected + ", Number of cycle: " + 0 + ". "); //Console write the 0th Cycle
+            Console.WriteLine("");
+
+            List<Excel> excel = new List<Excel> { };
+            excel.Add(new Excel { Cycle = 0, InfectedNumber = currentInfected, ContagiousNumber = currentContagious }); //Add 0th cycle data to excel list to be outputed
+            bool poped = true;
 
             for (int i = 1; i <= count; i++)
             {
-                Console.WriteLine("Current Contagious Population: " + currentContagious);
-                r0 = 1; //R0 formula not yet input
-                Console.WriteLine("Current Cases of Infection: " + currentInfected + ", Number of cycle: " + i + ". ");
-
-                //Console.WriteLine(Range(1, PatientContact));
+                //Console.WriteLine(Range(1, PatientContact)); // #####Debug#####
                 bool flag3 = currentInfected < populationsize;
                 if (flag3)
                 {
                     var CurrentContagious = currentContagious*(Range(1 ,PatientContact));
+                    CurrentContagious = (float)Math.Ceiling(CurrentContagious);
+
+                    //var CurrentHealthy = populaiton.Count();
+                    //Func<bool, bool> isInfected = IsInfected => !IsInfected;
+
+                    var CurrentHealthy = populaiton.Count(Person => Person.IsInfected is false);
+                    Console.WriteLine("Current Healthy Population: " + CurrentHealthy);
+                    
+                    //Console.WriteLine(CurrentContagious > CurrentHealthy); // #####Debug#####
+                    
+                    if (CurrentContagious > CurrentHealthy) { CurrentContagious = CurrentHealthy; }
+
+                    Console.WriteLine("Total Number of Contact with patients:" + CurrentContagious);
                     for (int I = 1; I <= CurrentContagious; I++)
                     {
                         //Console.WriteLine("running CurrentContagious:" + I);
@@ -191,10 +208,10 @@ namespace DiseaseSimulation
                             bool flag4 = Person.IsInfected;
                             if (!flag4)
                             {
-                                //if (rnd.Next(101) < ChanceOfInfection)
+                                //if (rnd.Next(101) < ChanceOfInfection) //!!!!!Outdated Random!!!!!
                                 if (Chance(ChanceOfInfection))
                                 {
-                                    //Console.WriteLine(Chance(ChanceOfInfection));
+                                    //Console.WriteLine(Chance(###Debug ChanceOfInfectionT/F:" + ChanceOfInfection)); // #####Debug#####
                                     Person.IsInfected = true;
                                     currentInfected++;
                                     currentContagious++;
@@ -208,31 +225,38 @@ namespace DiseaseSimulation
                     {
                         bool flag5 = Person.IsInfected;
                         bool flag6 = Person.IsArrested;
+                        poped = false;
                         if (flag5)
                         {
-                            //if (rnd.Next(101) < ChanceOfArrest && !flag6)
+                            //if (rnd.Next(101) < ChanceOfArrest && !flag6) //!!!!!Outdated Random!!!!!
                             if (Chance(ChanceOfArrest) && !flag6)
                             {
-                                //Console.WriteLine(Chance(ChanceOfArrest));
+                                //Console.WriteLine(###Debug ChanceOfArrestT/F:" + Chance(ChanceOfArrest)); // #####Debug#####
                                 Person.IsArrested = true;
                                 currentContagious--;
+                                poped = true;
+                                //Console.WriteLine("###Debug currentContagious(Arresting):" + currentContagious); // #####Debug#####
                             }
-                            //if (rnd.Next(101) < ChanceOfCure && flag6)
+                            //if (rnd.Next(101) < ChanceOfCure && flag6) //!!!!!Outdated Random!!!!!
                             if (Chance(ChanceOfCure) && flag6)
                             {
-                                //Console.WriteLine(Chance(ChanceOfCure));
+                                //Console.WriteLine(###Debug ChanceOfCureT/F:" + Chance(ChanceOfCure)); // #####Debug#####
                                 Person.IsInfected = false;
                                 Person.IsArrested = false;
                                 currentInfected--;
+                                poped = true;
+                                //Console.WriteLine("###Debug currentInfected(Arrested):" + currentInfected); // #####Debug#####
                             }
-                            //if (rnd.Next(101) < ChanceOfCure && !flag6)
-                            if (Chance(ChanceOfCure) && !flag6)
+                            //if (rnd.Next(101) < ChanceOfCure && !flag6) //!!!!!Outdated Random!!!!!
+                            if (Chance(ChanceOfCure) && !flag6 && !poped)
                             {
-                                //Console.WriteLine(Chance(ChanceOfCure));
+                                //Console.WriteLine("###Debug ChanceOfCureT/F:" + Chance(ChanceOfCure)); // #####Debug#####
                                 Person.IsInfected = false;
                                 Person.IsArrested = false;
                                 currentInfected--;
                                 currentContagious--;
+                                //Console.WriteLine("###Debug currentInfected(Not Arrested):" + currentInfected); // #####Debug#####
+                                //Console.WriteLine("###Debug currentContagious(Not Arrested):" + currentContagious); // #####Debug#####
                             }
                         }
                     }
@@ -242,41 +266,29 @@ namespace DiseaseSimulation
                     Console.WriteLine("The whole population is infected.");
                     break;
                 }
+                Console.WriteLine("Current Contagious Population: " + currentContagious);
+                r0 = 1; //R0 formula not yet input
+                Console.WriteLine("Current Cases of Infection: " + currentInfected + ", Number of cycle: " + i + ". ");
+                Console.WriteLine("");
+                excel.Add (new Excel {Cycle= i, InfectedNumber= currentInfected , ContagiousNumber= currentContagious });
             }
+            Export<Excel>(excel, @"Output\output.xlsx", "Out");
         }
 
-        /*
-        class XML
+        public bool Export<T>(List<T> list, string file, string sheetname)
         {
-            XLWorkbook workbook = new XLWorkbook();
-            DataTable dt = new DataTable() { TableName = "New Worksheet" };
-            DataSet ds = new DataSet();
-            var columns = new[] { "column1", "column2", "column3" };
-            var rows = new object[][]
+            bool Exported = false;
+            using (IXLWorkbook workbook = new XLWorkbook())
             {
-                new object[] {"1", 2, false },
-                new object[] { "test", 10000, 19.9 }
-            };
 
-            //Add columns
-            dt.Columns.AddRange(columns.Select(c => new DataColumn(c)).ToArray());
+                workbook.AddWorksheet(sheetname).FirstCell().InsertTable<T>(list, false);
 
-            //Add rows
-            foreach (var row in rows)
-            {
-                //dt.Rows.Add(row);
+                workbook.SaveAs(file);
+                Exported = true;
             }
 
-            //Convert datatable to dataset and add it to the workbook as worksheet
-            ds.Tables.Add(dt);
-            workbook.Worksheets.Add(ds);
-
-            //save
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string savePath = Path.Combine(desktopPath, "test.xlsx");
-            workbook.SaveAs(savePath, false);
+            return Exported;
         }
-        */
 
         static IEnumerable<Person> GetPopulation(int count)
         {
@@ -312,7 +324,7 @@ namespace DiseaseSimulation
             }
             return RandValue * (max - min) + min;
         }
-        public static float RandValue
+        public static float RandValue //input between 0 and 1 e.g. 75.95% = 0.7595
         {
             get
             {
@@ -357,5 +369,12 @@ namespace DiseaseSimulation
         public int Id { get; set; }
         public bool IsInfected { get; set; }
         public bool IsArrested { get; set; }
+    }
+
+    public class Excel
+    {
+        public int Cycle { get; set; }
+        public int InfectedNumber { get; set; }
+        public int ContagiousNumber { get; set; }
     }
 }
