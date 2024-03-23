@@ -10,23 +10,28 @@ namespace DiseaseSimulation
     {
         static void Main(string[] args)
         {
+            seed = (uint)RandValue;// for randomizer
+            iterations = 0U;// for randomizer
+
+            Console.WriteLine("");
+            Console.WriteLine("|=====|Start|=====|");
+            Console.WriteLine();
+
             Program program = new Program();
             program.VariableInput();
             program.SimulationStart(program.MaxCycle);
+
             Console.WriteLine(" ");
-            Console.WriteLine("Press any key to exit");
+            Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
 
         public void VariableInput()
         {
             int number;
-            double Double;
+            float Float;
 
-            //int populationsize;
-            //double r0;
-            //int initialInfected;
-
+            repeat1:
             Console.WriteLine("Please input the population size");
             bool flag1 = Int32.TryParse(Console.ReadLine(), out number);
             if (flag1)
@@ -34,35 +39,51 @@ namespace DiseaseSimulation
                 populationsize = number;
             }
             else
+            {
                 Console.WriteLine("Not a valid integer");
+                goto repeat1;
+            }
 
+            repeat2:
             Console.WriteLine("Please input the Chance of Infection by contact (in 100% scale, but don't input % sign e.g. 75.72381)");
-            bool flag2 = Double.TryParse(Console.ReadLine(), out Double);
+            bool flag2 = float.TryParse(Console.ReadLine(), out Float);
             if (flag2)
             {
-                ChanceOfInfection = Double;
+                ChanceOfInfection = Float;
             }
             else
+            {
                 Console.WriteLine("Not a valid value (don't input letters)");
+                goto repeat2;
+            }
 
+            repeat3:
             Console.WriteLine("Please input the Chance of Arrest of the infected individual (in 100% scale, but don't input % sign e.g. 75.72381)");
-            bool flag3 = Double.TryParse(Console.ReadLine(), out Double);
+            bool flag3 = float.TryParse(Console.ReadLine(), out Float);
             if (flag3)
             {
-                ChanceOfArrest = Double;
+                ChanceOfArrest = Float;
             }
             else
+            {
                 Console.WriteLine("Not a valid value (don't input letters)");
+                goto repeat3;
+            }
 
+            repeat4:
             Console.WriteLine("Please input the Chance of Cure (in 100% scale, but don't input % sign e.g. 75.72381)");
-            bool flag4 = Double.TryParse(Console.ReadLine(), out Double);
+            bool flag4 = float.TryParse(Console.ReadLine(), out Float);
             if (flag4)
             {
-                ChanceOfCure = Double;
+                ChanceOfCure = Float;
             }
             else
+            {
                 Console.WriteLine("Not a valid value (don't input letters)");
+                goto repeat4;
+            }
 
+            repeat5:
             Console.WriteLine("Please input the initial infected population");
             bool flag5 = Int32.TryParse(Console.ReadLine(), out number);
             if (flag5)
@@ -70,8 +91,12 @@ namespace DiseaseSimulation
                 initialInfected = number;
             }
             else
+            {
                 Console.WriteLine("Not a valid integer");
+                goto repeat5;
+            }
 
+            repeat6:
             Console.WriteLine("Please input the maximum number of people contacted by a patient in one cycle");
             bool flag6 = Int32.TryParse(Console.ReadLine(), out number);
             if (flag6)
@@ -79,8 +104,12 @@ namespace DiseaseSimulation
                 PatientContact = number;
             }
             else
+            {
                 Console.WriteLine("Not a valid integer");
+                goto repeat6;
+            }
 
+            repeat7:
             Console.WriteLine("Please input the Maximum Cycle for 1 simulation to run");
             bool flag7 = Int32.TryParse(Console.ReadLine(), out number);
             if (flag7)
@@ -88,7 +117,10 @@ namespace DiseaseSimulation
                 MaxCycle = number;
             }
             else
+            {
                 Console.WriteLine("Not a valid integer");
+                goto repeat7;
+            }
 
             Console.WriteLine("");
             Console.WriteLine("|=====|Input Finished|=====|");
@@ -121,28 +153,32 @@ namespace DiseaseSimulation
                 else
                     break;
             }
+            Console.WriteLine("");
             Console.WriteLine("|=====|Initialization Finished|=====|");
+            Console.WriteLine("Press enter to continue");
             Console.ReadLine();
 
             currentContagious = currentInfected;
-            Random rnd = new Random();
 
             for (int i = 1; i <= count; i++)
             {
+                //Console.WriteLine(Range(1, PatientContact));
                 bool flag3 = currentInfected < populationsize;
                 if (flag3)
                 {
-                    var CurrentContagious = currentContagious*(rnd.Next(PatientContact+1));
-                    Console.WriteLine("CurrentContagious"+ CurrentContagious);
-                    for (int I = 0; I < CurrentContagious; I++)
+                    var CurrentContagious = currentContagious*(Range(1 ,PatientContact));
+                    for (int I = 1; I <= CurrentContagious; I++)
                     {
+                        //Console.WriteLine("running CurrentContagious:" + I);
                         foreach (var Person in populaiton)
                         {
                             bool flag4 = Person.IsInfected;
                             if (!flag4)
                             {
-                                if (rnd.Next(101) < ChanceOfInfection)
+                                //if (rnd.Next(101) < ChanceOfInfection)
+                                if (Chance(ChanceOfInfection))
                                 {
+                                    //Console.WriteLine(Chance(ChanceOfInfection));
                                     Person.IsInfected = true;
                                     currentInfected++;
                                     currentContagious++;
@@ -151,25 +187,29 @@ namespace DiseaseSimulation
                             }
                         }
                     }
+
                     foreach (var Person in populaiton)
                     {
                         bool flag5 = Person.IsInfected;
                         bool flag6 = Person.IsArrested;
                         if (flag5)
                         {
-                            if (rnd.Next(101) < ChanceOfArrest && !flag6)
+                            //if (rnd.Next(101) < ChanceOfArrest && !flag6)
+                            if (Chance(ChanceOfArrest) && !flag6)
                             {
                                 Person.IsArrested = true;
                                 currentContagious--;
                             }
-                            if (rnd.Next(101) < ChanceOfCure && flag6)
+                            //if (rnd.Next(101) < ChanceOfCure && flag6)
+                            if (Chance(ChanceOfCure) && flag6)
                             {
                                 Person.IsInfected = false;
                                 Person.IsArrested = false;
                                 currentInfected--;
                                 currentContagious--;
                             }
-                            if (rnd.Next(101) < ChanceOfCure && !flag6)
+                            //if (rnd.Next(101) < ChanceOfCure && !flag6)
+                            if (Chance(ChanceOfCure) && !flag6)
                             {
                                 Person.IsInfected = false;
                                 Person.IsArrested = false;
@@ -177,15 +217,15 @@ namespace DiseaseSimulation
                             }
                         }
                     }
-
-                    r0 = 1; //R0 formula not yet input
-                    Console.WriteLine("Current Cases of Infection: " + currentInfected + ", Number of cycle: " + i + ". ");
                 }
                 else
                 {
                     Console.WriteLine("The whole population is infected.");
                     break;
                 }
+                Console.WriteLine("Current Contagious Population: " + currentContagious);
+                r0 = 1; //R0 formula not yet input
+                Console.WriteLine("Current Cases of Infection: " + currentInfected + ", Number of cycle: " + i + ". ");
             }
         }
 
@@ -199,13 +239,55 @@ namespace DiseaseSimulation
             return population;
         }
 
+        //Randomize from other coder
+        public static int GetInt(uint seed, uint input)
+        {
+            uint num = input * 3432918353U;
+            num = (num << 15 | num >> 17);
+            num *= 461845907U;
+            uint num2 = seed ^ num;
+            num2 = (num2 << 13 | num2 >> 19);
+            num2 = num2 * 5U + 3864292196U;
+            num2 ^= 2834544218U;
+            num2 ^= num2 >> 16;
+            num2 *= 2246822507U;
+            num2 ^= num2 >> 13;
+            num2 *= 3266489909U;
+            return (int)(num2 ^ num2 >> 16);
+        }
+        public static float Range(float min, float max)
+        {
+            if (max <= min)
+            {
+                return min;
+            }
+            return RandValue * (max - min) + min;
+        }
+        public static float RandValue
+        {
+            get
+            {
+                return (float)(((double)GetInt(seed, iterations++) - -2147483648.0) / 4294967295.0);
+            }
+        }
+
+        public static bool Chance(float chance)
+        {
+            return chance > 0f && (chance >= 1f || RandValue < chance);
+        }
+
+        private static uint seed;
+
+        private static uint iterations = 0U;
+        //Randomize from other coder
+
         public int populationsize;
 
-        public double ChanceOfInfection;
+        public float ChanceOfInfection;
 
-        public double ChanceOfArrest;
+        public float ChanceOfArrest;
 
-        public double ChanceOfCure;
+        public float ChanceOfCure;
 
         public int initialInfected;
 
@@ -217,7 +299,7 @@ namespace DiseaseSimulation
 
         public int MaxCycle;
 
-        public double r0;
+        public double r0; //for reverse calculation of R0 only
 
     }
 
