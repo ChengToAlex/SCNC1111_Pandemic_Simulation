@@ -6,4 +6,6 @@ SCNC1111 is a year 1 course offered by the Faculty of Science HKU, and this is a
 3. In each cycle, an infected person will have a chance to be cured (Pc Probability of cure) or arrested/quarantined (Pa Probability of arrest)
 4. Contagious populations are those who are infected but not arrested/quarantined
 
-The Number of Infected population and Contagious population will be monitored and the result will be exported into an Excel file in the Output folder, using the ClosedXML packages(package not included in the source code). 
+This simulation assumes that the disease is curable (% of people to be cured in 1 cycle which can be days, weeks or years, e.g. Tamiru et al. (2023): COVID recovery day median is 9 days, 50% of patients recover within 9 days) and it is not lethal (no decrease in population size)
+
+The Number of Infected population and Contagious population will be monitored and the result will be exported into an Excel file in the Output folder, using the ClosedXML packages (package not included in the source code). 
