@@ -7,7 +7,7 @@ using ClosedXML.Excel;
 
 namespace DiseaseSimulation
 {
-    class Program
+    class main
     {
         Random rnd = new Random(); //Old randomizer, mscorlib built-in
         static void Main(string[] args)
@@ -17,7 +17,8 @@ namespace DiseaseSimulation
             Console.WriteLine();
 
             Program program = new Program();
-            Seed = program.rnd.Next(0, 10000);
+            //Seed = program.rnd.Next(0, 10000);
+            Program.seed = (uint)DateTime.Now.GetHashCode();
             program.VariableInput();
             program.SimulationStart(program.MaxCycle);
 
@@ -25,6 +26,10 @@ namespace DiseaseSimulation
             Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
+    }
+    class Program
+    {
+        
 
         public static int Seed
         {
@@ -316,6 +321,7 @@ namespace DiseaseSimulation
             num2 *= 3266489909U;
             return (int)(num2 ^ num2 >> 16);
         }
+
         public static float Range(float min, float max)
         {
             if (max <= min)
@@ -324,6 +330,7 @@ namespace DiseaseSimulation
             }
             return RandValue * (max - min) + min;
         }
+
         public static float RandValue //input between 0 and 1 e.g. 75.95% = 0.7595
         {
             get
@@ -337,7 +344,7 @@ namespace DiseaseSimulation
             return chance > 0f && (chance >= 1f || RandValue < chance);
         }
 
-        private static uint seed;
+        public static uint seed;
 
         private static uint iterations = 0U;
         //Randomize from other coder
